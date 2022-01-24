@@ -8,7 +8,7 @@ def test_to_bronze(tmpdir, spark):
     raw_path = path + "/raw"
     generate(raw_path, 3)
     bronze_df = to_bronze(spark, raw_path)
-    #bronze_df.show()
+    bronze_df.show()
     schema = bronze_df.schema.fieldNames()
     assert(len(schema) == 1)
     assert(schema[0] == "value")
@@ -25,7 +25,7 @@ def test_to_silver(tmpdir, spark):
     print(fields)
     assert("value" in fields)
     assert("subject" in fields)
-    #silver_df.show()
+    silver_df.show()
 
 
 def test_parse_xml():
@@ -33,5 +33,6 @@ def test_parse_xml():
     values = parse_xml(xml_string)
     print(values)
     assert("SUBJECT" in values.keys())
+    assert("BODY" in values.keys())
     subject = values.get("SUBJECT")
     assert(len(subject) > 10)

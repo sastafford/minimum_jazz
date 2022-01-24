@@ -17,4 +17,5 @@ def parse_xml(xml_string: str) -> Dict:
     values = {}
     root = ET.fromstring(xml_string)
     values["SUBJECT"] = root.findall(".//SUBJECT")[0].text
+    values["BODY"] = root.findall(".//BODY")[0].text
     return values
