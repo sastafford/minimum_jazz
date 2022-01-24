@@ -15,6 +15,11 @@ def test_generate_files(tmpdir):
         path = Path(xml_path)
         assert(path.is_file())
 
-
 def test_processing_instruction():
+    pi = get_processing_instruction()
     print(get_processing_instruction())
+    assert(pi.startswith("<?xml version='1.0'"))
+
+    
+    
+
