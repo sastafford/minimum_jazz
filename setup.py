@@ -7,5 +7,8 @@ setup(
     setup_requires=["wheel"],
     version="0.1.0",
     description="Lakehouse Architecture data piplines examples",
-    author="Scott Stafford"
+    author="Scott Stafford",
+    install_requires=[
+        'faker==11.3.0'
+    ]
 )
