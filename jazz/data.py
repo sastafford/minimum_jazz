@@ -1,7 +1,8 @@
 from faker import Faker
 import xml.etree.ElementTree as ET
 import random
-from pathlib import Path 
+from pathlib import Path
+import time
 
 def generate_xml(path):
     faker = Faker()
@@ -27,7 +28,10 @@ def generate_xml(path):
 def generate(path, number_files):
     path = Path(path)
     path.mkdir(parents=True, exist_ok=True)
+    print("generating " + str(number_files) + " files")
+    tic = time.perf_counter()
     for i in range(number_files):
         generate_xml("./data/sample-" + str(i) + ".xml")
-
+    toc = time.perf_counter()
+    print(f"Total Processing Time {toc - tic:0.4f} seconds")
 generate("./data", 1000)
