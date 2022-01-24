@@ -1,0 +1,9 @@
+{
+    "environments": {
+        "default": {
+            "profile": "DEFAULT",
+            "workspace_dir": "/Shared/dbx/projects/minimum_jazz",
+            "artifact_location": "dbfs:/dbx/minimum_jazz"
+        }
+    }
+}

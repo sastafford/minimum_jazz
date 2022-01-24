@@ -13,6 +13,7 @@ pytest = "*"
 pytest-cov = "*"
 pytest-bdd = "*"
 setuptools = "*"
+dbx = "*"
 
 [requires]
 python_version = "3.9"
