@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pyspark = "*"
+faker = "*"
+delta-spark = "*"
 
 [dev-packages]
 pytest = "*"
