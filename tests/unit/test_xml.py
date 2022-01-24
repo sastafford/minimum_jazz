@@ -1,4 +1,4 @@
-from jazz.xml import generate_xml
+from jazz.data import generate_xml
 from pathlib import Path
 
 def test_xml_file_exists(tmpdir):

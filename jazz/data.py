@@ -1,6 +1,7 @@
 from faker import Faker
 import xml.etree.ElementTree as ET
 import random
+from pathlib import Path 
 
 def generate_xml(path):
     faker = Faker()
@@ -20,6 +21,13 @@ def generate_xml(path):
 
     # create a new XML file with the results
     mydata = ET.tostring(root)
-    print(mydata)
     myfile = open(path, "w")
     myfile.write(mydata.decode('UTF-8'))
+
+def generate(path, number_files):
+    path = Path(path)
+    path.mkdir(parents=True, exist_ok=True)
+    for i in range(number_files):
+        generate_xml("./data/sample-" + str(i) + ".xml")
+
+generate("./data", 1000)
