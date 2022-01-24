@@ -1,5 +1,5 @@
-from jazz.data import generate
-from jazz.pipeline import to_bronze, to_silver
+from jazz.data import generate, generate_xml
+from jazz.pipeline import to_bronze, to_silver, parse_xml
 
 from pathlib import Path
 
@@ -23,3 +23,11 @@ def test_to_silver(tmpdir, spark):
     bronze_path = path + "/bronze"
     bronze_df.write.format("delta").save(bronze_path)
     to_silver(spark, bronze_path)
+
+
+def test_parse_xml():
+    xml_string = generate_xml()
+    values = parse_xml(xml_string)
+    print(values)
+    subject = values.get("SUBJECT")
+    assert(len(subject) > 10)
