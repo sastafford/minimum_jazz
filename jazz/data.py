@@ -4,9 +4,11 @@ import random
 from pathlib import Path
 import time
 
-def generate_xml(path):
+def generate_xml() -> str:
     faker = Faker()
+    pi = ET.ProcessingInstruction("version", "1.0")
     root = ET.Element('MESSAGE')
+    ET.PI(pi)
     metadata = ET.SubElement(root, 'METADATA')
     original_date = ET.SubElement(metadata, "ORIGINAL_DATE")
     original_date.text = faker.date()
@@ -23,9 +25,11 @@ def generate_xml(path):
     # ET.indent(root) 
 
     # create a new XML file with the results
-    mydata = ET.tostring(root)
+    return ET.tostring(root)
+
+def save_file(path, data):
     myfile = open(path, "w")
-    myfile.write(mydata.decode('UTF-8'))
+    myfile.write(data.decode('UTF-8'))
 
 def generate(path, number_files):
     path = Path(path)
@@ -33,7 +37,9 @@ def generate(path, number_files):
     print("generating " + str(number_files) + " files")
     tic = time.perf_counter()
     for i in range(number_files):
-        generate_xml(str(path) + "/sample-" + str(i) + ".xml")
+        xml = generate_xml()
+        xml_path = str(path) + "/sample-" + str(i) + ".xml"
+        save_file(xml_path, xml)
     toc = time.perf_counter()
     print(f"Total Processing Time {toc - tic:0.4f} seconds")
 
