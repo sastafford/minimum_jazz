@@ -21,7 +21,11 @@ def test_to_silver(tmpdir, spark):
     generate(raw_path, 3)
     bronze_df = to_bronze(spark, raw_path)
     silver_df = to_silver(spark, bronze_df)
-    silver_df.show()
+    fields = silver_df.schema.fieldNames()
+    print(fields)
+    assert("value" in fields)
+    assert("subject" in fields)
+    #silver_df.show()
 
 
 def test_parse_xml():

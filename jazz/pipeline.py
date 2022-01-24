@@ -10,7 +10,7 @@ def to_bronze(spark, raw_path: str) -> DataFrame:
 
 def to_silver(spark, bronze_df: DataFrame) -> DataFrame:
     parseXml = udf(parse_xml)
-    df = bronze_df.select("value", parseXml(col("value")))
+    df = bronze_df.select("value", parseXml(col("value")).alias("subject"))
     return df
 
 def parse_xml(xml_string: str) -> Dict:
