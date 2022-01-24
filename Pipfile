@@ -12,6 +12,7 @@ delta-spark = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-bdd = "*"
+setuptools = "*"
 
 [requires]
 python_version = "3.9"
