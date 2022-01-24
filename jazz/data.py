@@ -18,7 +18,9 @@ def generate_xml(path):
     subject.text = faker.sentence()
     body = ET.SubElement(root, "BODY")
     body.text = faker.paragraph(nb_sentences=10)
-    ET.indent(root)
+    
+    # supported in Python 3.10
+    # ET.indent(root) 
 
     # create a new XML file with the results
     mydata = ET.tostring(root)
@@ -31,7 +33,7 @@ def generate(path, number_files):
     print("generating " + str(number_files) + " files")
     tic = time.perf_counter()
     for i in range(number_files):
-        generate_xml("./data/sample-" + str(i) + ".xml")
+        generate_xml(str(path) + "/sample-" + str(i) + ".xml")
     toc = time.perf_counter()
     print(f"Total Processing Time {toc - tic:0.4f} seconds")
-generate("./data", 1000)
+
