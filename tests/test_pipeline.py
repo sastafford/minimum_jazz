@@ -24,7 +24,7 @@ def test_to_silver(tmpdir, spark):
     fields = silver_df.schema.fieldNames()
     print(fields)
     assert("value" in fields)
-    assert("subject" in fields)
+    assert("message" in fields)
     silver_df.show()
 
 
