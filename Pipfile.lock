@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "23645bc568db71255b0508a3770502ce808f8c6830a876cc0a6d930823149f0e"
+            "sha256": "5c9b03929b343e1665e86353417930d8843c2f7bdb499d6db57826629d2ca0e0"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.9"
+            "python_version": "3.8"
         },
         "sources": [
             {
@@ -39,6 +39,10 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==4.10.1"
+        },
+        "minimum-jazz": {
+            "editable": true,
+            "path": "."
         },
         "py4j": {
             "hashes": [
@@ -504,6 +508,14 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==4.10.1"
+        },
+        "importlib-resources": {
+            "hashes": [
+                "sha256:33a95faed5fc19b4bc16b29a6eeae248a3fe69dd55d4d229d2b480e23eeaad45",
+                "sha256:d756e2f85dd4de2ba89be0b21dba2a3bbec2e871a42a3a16719258a11f87506b"
+            ],
+            "markers": "python_version < '3.9'",
+            "version": "==5.4.0"
         },
         "iniconfig": {
             "hashes": [
