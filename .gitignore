@@ -4,3 +4,5 @@
 *.code-workspace
 dist/
 data/
+build/
+*.egg-info/
