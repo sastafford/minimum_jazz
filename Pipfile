@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyspark = "*"
+faker = "*"
+delta-spark = "*"
+minimum-jazz = {editable = true, path = "."}
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+pytest-bdd = "*"
+setuptools = "*"
+dbx = "*"
+
+[requires]
+python_version = "3.8"
