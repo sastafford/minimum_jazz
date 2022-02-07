@@ -21,7 +21,7 @@ def test_to_silver(tmpdir, spark):
     raw_path = path + "/raw"
     generate(raw_path, 3)
     bronze_df = to_bronze(spark, raw_path)
-    silver_df = to_silver(spark, bronze_df)
+    silver_df = to_silver(bronze_df)
     schema = silver_df.schema
     fields = schema.fieldNames()
     print(schema)

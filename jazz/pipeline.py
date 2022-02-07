@@ -9,7 +9,7 @@ def to_bronze(spark, raw_path: str) -> DataFrame:
     df = spark.read.format("text").load(raw_path + "/*.xml")
     return df
 
-def to_silver(spark, bronze_df: DataFrame) -> DataFrame:
+def to_silver(bronze_df: DataFrame) -> DataFrame:
     df = bronze_df.select("value", parse_xml(col("value")).alias("message"))
     return df
 
