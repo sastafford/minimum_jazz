@@ -25,15 +25,35 @@ The pipeline module facilitates processing the XML data according to the Medalli
 The optimal way of implementing the bronze, silver, and gold tables in the medallion architecture is to use Delta Lake.  Delta Lake is an open-source project that enables building a Lakehouse Architecture on top of existing storage systems.  
 ### to_bronze()
 
-The to_bronze() method is responsible for reading data from an upstream data source and 
+The to_bronze() method is responsible for reading data from an upstream data source and staging it in a RAW table. The data in the bronze table should be as close to raw as possible. Advise to keep the original column names and table names the same. This makes it easier to trace back when investigating or reporting issues in the source.
+
+In the following example to_bronze() returns a Spark DataFrame.
 
 ```python
 from jazz.pipeline import to_bronze
 
 bronze_df = to_bronze(spark, "dbfs:/home/scott.stafford@databricks.com/minimum_jazz/raw")
-display(bronze_df)
+bronze_df.show()
 ```
 
+## to_silver()
+
+Once you have a bronze table, the next step is to begin shaping the raw data into a more usable shape.  The master schema should contain correctly modelled tables, that are appropriately named. Column names should also be corrected along with their data types.  Below are examples of additional operations that may be conducted in a to_silver() method.  
+
+ - Standardising all date formats and time zones to be the same (where appropriate)
+ - Rounding numbers where appropriate to fewer decimal places
+ - Cleaning strings to maybe fix capitalisation or remove start and end white spaces
+ - Standardising addresses to be of the same format
+ - Splitting data out into multiple columns or extracting it from JSON
+
+In the following example to_silver() returns a Spark DataFrame
+
+```python
+from jazz.pipeline import to_silver
+
+silver_df = to_silver(bronze_df)
+silver_df.show()
+```
 
 
 
