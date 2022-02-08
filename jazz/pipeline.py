@@ -31,7 +31,7 @@ def to_gold(silver_df: DataFrame, id_col: str, text_col: str) -> DataFrame:
 
     get_ner_with_transformers_udf = pandas_udf(_get_ner_with_transformers, returnType=ArrayType(ArrayType(StringType()), containsNull=True))
 
-    df_with_ents = df.select(id_col, text_col, get_ner_with_transformers_udf(col(text_col)).alias("NER"))\
+    df_with_ents = silver_df.select(id_col, text_col, get_ner_with_transformers_udf(col(text_col)).alias("NER"))\
       .filter(size(col("NER")) > lit(0))\
       .drop(text_col)\
       .withColumn("NER", explode(col("NER")))\
