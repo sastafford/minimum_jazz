@@ -31,6 +31,9 @@ def test_to_silver(tmpdir, spark):
     silver_df.show()
 
 
+def test_to_gold():
+    assert(1 == 0)
+
 def test_parse_xml(spark):
     xml_string = generate_xml()
     df = spark.createDataFrame([
