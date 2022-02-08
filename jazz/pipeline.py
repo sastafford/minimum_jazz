@@ -1,7 +1,7 @@
 import pandas as pd
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import udf, col, pandas_udf, size, explode, lit
-from pyspark.sql.types import StructField, StructType, StringType
+from pyspark.sql.types import StructField, StructType, StringType, ArrayType
 
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
