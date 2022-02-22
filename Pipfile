@@ -11,6 +11,8 @@ minimum-jazz = {editable = true, path = "."}
 pandas = "*"
 transformers = "*"
 pyarrow = "*"
+mlflow = "*"
+sklearn = "*"
 
 [dev-packages]
 pytest = "*"
