@@ -36,7 +36,7 @@ bronze_df = to_bronze(spark, "dbfs:/home/scott.stafford@databricks.com/minimum_j
 bronze_df.show()
 ```
 
-## to_silver()
+### to_silver()
 
 Once you have a bronze table, the next step is to begin shaping the raw data into a more usable shape.  The master schema should contain correctly modelled tables, that are appropriately named. Column names should also be corrected along with their data types.  Below are examples of additional operations that may be conducted in a to_silver() method.  
 
@@ -55,6 +55,14 @@ silver_df = to_silver(bronze_df)
 silver_df.show()
 ```
 
+### to_gold()
 
+## Retraining NER Model
+
+### Starting mlflow locally
+
+```
+mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns 
+```
 
 

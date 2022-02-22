@@ -4,6 +4,10 @@ from sklearn.linear_model import LogisticRegression
 import mlflow
 import mlflow.sklearn
 
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_experiment("my-experiment-1")
+
+
 if __name__ == "__main__":
     X = np.array([-2, -1, 0, 1, 2, 1]).reshape(-1, 1)
     y = np.array([0, 0, 1, 1, 1, 0])
