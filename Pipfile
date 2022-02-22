@@ -8,6 +8,9 @@ pyspark = "*"
 faker = "*"
 delta-spark = "*"
 minimum-jazz = {editable = true, path = "."}
+pandas = "*"
+transformers = "*"
+pyarrow = "*"
 
 [dev-packages]
 pytest = "*"
