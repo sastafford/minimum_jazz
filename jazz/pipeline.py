@@ -56,8 +56,8 @@ def parse_xml(xml_string: str) -> Dict:
     return values
 
 def _get_ner_with_transformers(text_col: pd.Series) -> pd.Series:
-    tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER", padding=True)
-    model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
+    tokenizer = AutoTokenizer.from_pretrained("model_data/bert-base-ner", padding=True)
+    model = AutoModelForTokenClassification.from_pretrained("model_data/bert-base-ner")
     nlp = pipeline("ner", model=model, tokenizer=tokenizer)
     text_ner = nlp(text_col.values.tolist())
     ner_extracted = list(map(_extract_entities, text_ner))

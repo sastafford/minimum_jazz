@@ -9,6 +9,7 @@ faker = "*"
 delta-spark = "*"
 minimum-jazz = {editable = true, path = "."}
 pandas = "*"
+torch = "*"
 transformers = "*"
 pyarrow = "*"
 
@@ -18,6 +19,7 @@ pytest-cov = "*"
 pytest-bdd = "*"
 setuptools = "*"
 dbx = "*"
+minimum-jazz = {editable = true, path = "."}
 
 [requires]
 python_version = "3.8"
