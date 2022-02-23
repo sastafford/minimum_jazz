@@ -35,7 +35,7 @@ with mlflow.start_run() as run:
     lr.fit(X, y)
     print(run.info)
     result = mlflow.register_model(
-        run.info.run_id,
+        "runs:/" + run.info.run_id,
         MODEL_NAME
     )
     client.transition_model_version_stage(
