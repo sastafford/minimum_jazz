@@ -57,7 +57,7 @@ silver_df.show()
 
 ### to_gold()
 
-## Retraining NER Model
+## Training Linear Model
 
 ### Starting mlflow locally
 
@@ -65,4 +65,31 @@ silver_df.show()
 mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns 
 ```
 
+### Creating model
+
+```
+python jazz/train.py
+```
+
+### Serving model
+
+#### From Python
+
+```
+python jazz/apply_model.py
+```
+
+#### From REST API point
+
+Deploy model locally as local REST API endpoints
+
+```
+mlflow models serve -m runs:/<run_id>/model --no-conda --port 5001
+```
+
+Execute endpoint
+
+```
+curl http://127.0.0.1:5001/invocations -H 'Content-Type: application/json' -d '{ "data": [[-10], [-9]] }'
+```
 
