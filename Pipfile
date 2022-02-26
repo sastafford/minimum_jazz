@@ -12,6 +12,9 @@ pandas = "*"
 torch = "*"
 transformers = "*"
 pyarrow = "*"
+sklearn = "*"
+mlflow = "~=1.11.0"
+numpy = "~=1.18.1"
 
 [dev-packages]
 pytest = "*"
