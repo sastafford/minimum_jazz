@@ -15,6 +15,7 @@ pyarrow = "*"
 sklearn = "*"
 mlflow = "~=1.11.0"
 numpy = "~=1.18.1"
+dbx = "*"
 
 [dev-packages]
 pytest = "*"
