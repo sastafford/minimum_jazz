@@ -6,3 +6,5 @@ dist/
 data/
 build/
 *.egg-info/
+mlruns/
+mlflow.db

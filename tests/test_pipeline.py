@@ -1,5 +1,5 @@
 from jazz.data import generate, generate_xml
-from jazz.pipeline import to_bronze, to_silver, parse_xml
+from jazz.pipeline import to_bronze, to_silver, to_gold, parse_xml
 
 from pyspark.sql import Row
 from pyspark.sql.functions import col
@@ -30,6 +30,17 @@ def test_to_silver(tmpdir, spark):
     assert("message" in fields)
     silver_df.show()
 
+
+def test_to_gold(spark):
+    df = spark.createDataFrame([
+        Row(id = 1, text = "My name is Charlie Brown")
+    ])
+    new_df = to_gold(df, "id", "text")
+    new_df.show()
+    names = new_df.schema.fieldNames() 
+    assert("id" in names)
+    assert("entity" in names)
+    assert("entity_type" in names)
 
 def test_parse_xml(spark):
     xml_string = generate_xml()
