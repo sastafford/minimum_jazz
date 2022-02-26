@@ -1,3 +1,4 @@
+import string
 import pandas as pd
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import udf, col, pandas_udf, size, explode, lit
@@ -17,7 +18,7 @@ def to_silver(bronze_df: DataFrame) -> DataFrame:
     df = bronze_df.select("value", parse_xml(col("value")).alias("message"))
     return df
 
-def to_gold(silver_df: DataFrame, id_col: str, text_col: str) -> DataFrame:
+def to_gold(silver_df: DataFrame, id_col: str, text_col: str, model_path = "data/bert-base-ner") -> DataFrame:
     """function that finds all named entities in a column of text in a Spark dataframe and returns the entities along with their types
 
     Parameters:
@@ -28,6 +29,20 @@ def to_gold(silver_df: DataFrame, id_col: str, text_col: str) -> DataFrame:
     Returns:
     - a Spark dataframe with three columns: the ID, the entities, and the entity types
     """
+    def _get_ner_with_transformers(text_col: pd.Series) -> pd.Series:
+        tokenizer = AutoTokenizer.from_pretrained(model_path, padding=True)
+        model = AutoModelForTokenClassification.from_pretrained(model_path)
+        nlp = pipeline("ner", model=model, tokenizer=tokenizer)
+        text_ner = nlp(text_col.values.tolist())
+        ner_extracted = list(map(_extract_entities, text_ner))
+        return pd.Series(ner_extracted)
+    
+  
+    def _extract_entities(ner_list):
+        if len(ner_list) > 0:
+            return [(e["entity"], e["word"]) for e in ner_list]
+        else:
+            return []
 
     get_ner_with_transformers_udf = pandas_udf(_get_ner_with_transformers, returnType=ArrayType(ArrayType(StringType()), containsNull=True))
 
@@ -55,18 +70,5 @@ def parse_xml(xml_string: str) -> Dict:
     values["body"] = root.findall(".//BODY")[0].text
     return values
 
-def _get_ner_with_transformers(text_col: pd.Series) -> pd.Series:
-    tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER", padding=True)
-    model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
-    nlp = pipeline("ner", model=model, tokenizer=tokenizer)
-    text_ner = nlp(text_col.values.tolist())
-    ner_extracted = list(map(_extract_entities, text_ner))
-    return pd.Series(ner_extracted)
-    
-  
-def _extract_entities(ner_list):
-    if len(ner_list) > 0:
-      return [(e["entity"], e["word"]) for e in ner_list]
-    else:
-      return []
+
 

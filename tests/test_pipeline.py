@@ -39,8 +39,8 @@ def test_to_gold(spark):
     new_df.show()
     names = new_df.schema.fieldNames() 
     assert("id" in names)
-    assert("entities" in names)
-    assert("types" in names)
+    assert("entity" in names)
+    assert("entity_type" in names)
 
 def test_parse_xml(spark):
     xml_string = generate_xml()
