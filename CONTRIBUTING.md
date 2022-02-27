@@ -43,6 +43,12 @@ pipenv install --dev -e .
 pytest
 ```
 
+## Run tests in Databrickss
+
+```
+dbx execute --cluster-name=<all_purpose_cluster_name> --job=minimum_jazz_test
+```
+
 ## Build Python whl
 
 The whl file is placed under the ./dist folder.

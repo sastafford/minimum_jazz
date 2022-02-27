@@ -9,6 +9,8 @@ setup(
     description="Lakehouse Architecture data piplines examples",
     author="Scott Stafford",
     install_requires=[
-        'faker==11.3.0'
+        'faker==11.3.0',
+        'pytest==7.0.1',
+        'delta-spark==1.1.0'
     ]
 )

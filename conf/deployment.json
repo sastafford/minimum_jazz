@@ -1,0 +1,32 @@
+{
+    "default": {
+        "jobs": [
+            {
+                "name": "minimum_jazz_test",
+                "new_cluster": {
+                    "spark_version": "7.3.x-cpu-ml-scala2.12",
+                    "node_type_id": "r4.xlarge",
+                    "driver_node_type_id": "r4.xlarge",
+                    "aws_attributes": {
+                        "first_on_demand": 0,
+                        "availability": "SPOT"
+                    },
+                    "spark_conf": {
+                        "spark.master": "local[*]",
+                        "spark.databricks.cluster.profile": "singleNode",
+                        "spark.databricks.mlflow.autologging.enabled": "true"
+                    },
+                    "num_workers": 1,
+                    "custom_tags": {
+                        "ResourceClass": "SingleNode"
+                    }
+                },
+                "libraries": [],
+                "max_retries": 0,
+                "spark_python_task": {
+                    "python_file": "tests/run_tests.py"
+                }
+            }
+        ]
+    }
+}
