@@ -11,6 +11,7 @@ setup(
     install_requires=[
         'faker==11.3.0',
         'pytest==7.0.1',
-        'delta-spark==1.1.0'
+        'delta-spark==1.1.0',
+        'transformers==4.16.2'
     ]
 )

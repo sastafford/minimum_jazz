@@ -8,14 +8,13 @@ pyspark = "*"
 faker = "*"
 delta-spark = "*"
 minimum-jazz = {editable = true, path = "."}
-pandas = "*"
-torch = "*"
+pandas = "~=1.0.1"
+torch = "~=1.6.0"
 transformers = "*"
-pyarrow = "*"
-sklearn = "*"
+pyarrow = "~=1.0.1"
 mlflow = "~=1.11.0"
 numpy = "~=1.18.1"
-dbx = "*"
+scikit-learn = "~=0.22.1"
 
 [dev-packages]
 pytest = "*"
@@ -26,4 +25,4 @@ dbx = "*"
 minimum-jazz = {editable = true, path = "."}
 
 [requires]
-python_version = "3.8"
+python_version = "3.7.10"
