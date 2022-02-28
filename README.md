@@ -36,6 +36,12 @@ bronze_df = to_bronze(spark, "dbfs:/home/scott.stafford@databricks.com/minimum_j
 bronze_df.show()
 ```
 
+#### Execute bronze task
+
+```
+python jazz/jobs/bronze.py --number_files 10 --project_home ./data
+```
+
 ### to_silver()
 
 Once you have a bronze table, the next step is to begin shaping the raw data into a more usable shape.  The master schema should contain correctly modelled tables, that are appropriately named. Column names should also be corrected along with their data types.  Below are examples of additional operations that may be conducted in a to_silver() method.  
@@ -55,6 +61,12 @@ silver_df = to_silver(bronze_df)
 silver_df.show()
 ```
 
+#### Execute silver task
+
+```
+python jazz/jobs/silver.py --project_home ./data
+```
+
 ### to_gold()
 
 ## Training Linear Model
@@ -68,7 +80,7 @@ mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./
 ### Creating model
 
 ```
-python jazz/train.py
+python jazz/jobs/train.py --mlflow_tracking_uri=http://127.0.0.1:5000 --experiment=happiness_experiment
 ```
 
 ### Serving model
@@ -76,7 +88,7 @@ python jazz/train.py
 #### From Python
 
 ```
-python jazz/apply_model.py
+python jazz/jobs/apply_model.py --mlflow_tracking_uri=http://127.0.0.1:5000 --model_name=happiness_prophet
 ```
 
 #### From REST API point
@@ -84,12 +96,32 @@ python jazz/apply_model.py
 Deploy model locally as local REST API endpoints
 
 ```
+MLFLOW_TRACKING_URI=http://127.0.0.1:5000
 mlflow models serve -m runs:/<run_id>/model --no-conda --port 5001
 ```
 
 Execute endpoint
 
 ```
+MLFLOW_TRACKING_URI=http://127.0.0.1:5000
 curl http://127.0.0.1:5001/invocations -H 'Content-Type: application/json' -d '{ "data": [[-10], [-9]] }'
+```
+
+#### Build docker image
+
+Requires docker installed on your local machine
+
+Build the docker image
+
+```
+MLFLOW_TRACKING_URI=http://127.0.0.1:5000
+mlflow models build-docker -m "runs:/some-run-uuid/my-model" -n "happy_image"
+```
+
+Run the docker image and invoke the endpoint on the docke
+
+```
+docker run -p 5002:8080 "happy_image"
+curl http://127.0.0.1:5002/invocations -H 'Content-Type: application/json' -d '{ "data": [[-10], [-9]] }'
 ```
 

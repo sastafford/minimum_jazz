@@ -1,0 +1,140 @@
+{
+    "default": {
+        "jobs": [
+            {
+                "name": "minimum_jazz_test",
+                "new_cluster": {
+                    "spark_version": "7.3.x-cpu-ml-scala2.12",
+                    "node_type_id": "r4.xlarge",
+                    "driver_node_type_id": "r4.xlarge",
+                    "aws_attributes": {
+                        "first_on_demand": 0,
+                        "availability": "SPOT",
+                        "ebs_volume_type": "GENERAL_PURPOSE_SSD",
+                        "ebs_volume_count": 1,
+                        "ebs_volume_size": 100
+                    },
+                    "spark_conf": {
+                        "spark.master": "local[*]",
+                        "spark.databricks.cluster.profile": "singleNode",
+                        "spark.databricks.mlflow.autologging.enabled": "true"
+                    },
+                    "num_workers": 1,
+                    "custom_tags": {
+                        "ResourceClass": "SingleNode"
+                    }
+                },
+                "libraries": [],
+                "max_retries": 0,
+                "spark_python_task": {
+                    "python_file": "tests/run_tests.py"
+                }
+            },
+            {
+                "name": "train_model",
+                "new_cluster": {
+                    "spark_version": "7.3.x-cpu-ml-scala2.12",
+                    "node_type_id": "r4.xlarge",
+                    "driver_node_type_id": "r4.xlarge",
+                    "aws_attributes": {
+                        "first_on_demand": 0,
+                        "availability": "SPOT",
+                        "ebs_volume_type": "GENERAL_PURPOSE_SSD",
+                        "ebs_volume_count": 1,
+                        "ebs_volume_size": 100
+                    },
+                    "spark_conf": {
+                        "spark.master": "local[*]",
+                        "spark.databricks.cluster.profile": "singleNode",
+                        "spark.databricks.mlflow.autologging.enabled": "true"
+                    },
+                    "num_workers": 1,
+                    "custom_tags": {
+                        "ResourceClass": "SingleNode"
+                    }
+                },
+                "libraries": [],
+                "max_retries": 0,
+                "spark_python_task": {
+                    "python_file": "jazz/jobs/train.py"
+                }
+            },
+            {
+                "email_notifications": {},
+                "name": "jazz_pipeline",
+                "max_concurrent_runs": 1,
+                "tasks": [
+                    {
+                        "new_cluster": {
+                            "spark_version": "7.3.x-cpu-ml-scala2.12",
+                            "node_type_id": "r4.xlarge",
+                            "driver_node_type_id": "r4.xlarge",
+                            "aws_attributes": {
+                                "first_on_demand": 0,
+                                "availability": "SPOT",
+                                "ebs_volume_type": "GENERAL_PURPOSE_SSD",
+                                "ebs_volume_count": 1,
+                                "ebs_volume_size": 100
+                            },
+                            "spark_conf": {
+                                "spark.master": "local[*]",
+                                "spark.databricks.cluster.profile": "singleNode",
+                                "spark.databricks.mlflow.autologging.enabled": "true"
+                            },
+                            "num_workers": 1,
+                            "custom_tags": {
+                                "ResourceClass": "SingleNode"
+                            }
+                        },
+                        "spark_python_task": {
+                            "python_file": "jazz/jobs/bronze.py",
+                            "parameters": [
+                                "--xml_directory",
+                                "/dbfs/Shared/dbx/projects/minimum_jazz/raw",
+                                "--project_home",
+                                "dbfs:/Shared/dbx/projects/minimum_jazz"
+                            ]
+                        },
+                        "email_notifications": {},
+                        "task_key": "bronze"
+                    },
+                    {
+                        "new_cluster": {
+                            "spark_version": "7.3.x-cpu-ml-scala2.12",
+                            "node_type_id": "r4.xlarge",
+                            "driver_node_type_id": "r4.xlarge",
+                            "aws_attributes": {
+                                "first_on_demand": 0,
+                                "availability": "SPOT",
+                                "ebs_volume_type": "GENERAL_PURPOSE_SSD",
+                                "ebs_volume_count": 1,
+                                "ebs_volume_size": 100
+                            },
+                            "spark_conf": {
+                                "spark.master": "local[*]",
+                                "spark.databricks.cluster.profile": "singleNode",
+                                "spark.databricks.mlflow.autologging.enabled": "true"
+                            },
+                            "num_workers": 1,
+                            "custom_tags": {
+                                "ResourceClass": "SingleNode"
+                            }
+                        },
+                        "spark_python_task": {
+                            "python_file": "jazz/jobs/silver.py",
+                            "parameters": [
+                                "--project_home",
+                                "dbfs:/Shared/dbx/projects/minimum_jazz"
+                            ]
+                        },
+                        "email_notifications": {},
+                        "task_key": "silver",
+                        "depends_on": [{
+                            "task_key": "bronze"
+                        }]
+                    }
+                ]
+            }
+        ]
+    }
+}
