@@ -89,8 +89,10 @@
                         "spark_python_task": {
                             "python_file": "jazz/jobs/bronze.py",
                             "parameters": [
+                                "--xml_directory",
+                                "/dbfs/Shared/dbx/projects/minimum_jazz/raw",
                                 "--project_home",
-                                "/dbfs/Shared/dbx/projects/minimum_jazz"
+                                "dbfs:/Shared/dbx/projects/minimum_jazz"
                             ]
                         },
                         "email_notifications": {},
@@ -122,7 +124,7 @@
                             "python_file": "jazz/jobs/silver.py",
                             "parameters": [
                                 "--project_home",
-                                "/dbfs/Shared/dbx/projects/minimum_jazz"
+                                "dbfs:/Shared/dbx/projects/minimum_jazz"
                             ]
                         },
                         "email_notifications": {},
