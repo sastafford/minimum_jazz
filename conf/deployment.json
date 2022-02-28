@@ -87,7 +87,11 @@
                             }
                         },
                         "spark_python_task": {
-                            "python_file": "jazz/jobs/bronze.py"
+                            "python_file": "jazz/jobs/bronze.py",
+                            "parameters": [
+                                "--project_home",
+                                "/dbfs/Shared/dbx/projects/minimum_jazz"
+                            ]
                         },
                         "email_notifications": {},
                         "task_key": "bronze"
@@ -115,7 +119,11 @@
                             }
                         },
                         "spark_python_task": {
-                            "python_file": "jazz/jobs/silver.py"
+                            "python_file": "jazz/jobs/silver.py",
+                            "parameters": [
+                                "--project_home",
+                                "/dbfs/Shared/dbx/projects/minimum_jazz"
+                            ]
                         },
                         "email_notifications": {},
                         "task_key": "silver",
