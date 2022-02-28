@@ -84,6 +84,7 @@ python jazz/apply_model.py --mlflow_tracking_uri=http://127.0.0.1:5000 --model_n
 Deploy model locally as local REST API endpoints
 
 ```
+MLFLOW_TRACKING_URI=http://127.0.0.1:5000
 mlflow models serve -m runs:/<run_id>/model --no-conda --port 5001
 ```
 
