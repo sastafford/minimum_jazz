@@ -1,15 +1,29 @@
 import numpy as np
+import os
+import sys
 from sklearn.linear_model import LinearRegression
+from argparse import ArgumentParser
 
 from faker import Faker
 import mlflow
 import mlflow.sklearn
 from mlflow.tracking import MlflowClient
 
-MODEL_NAME = "HAPPINESS_PROPHET"
+mlflow_tracking_uri = os.environ['MLFLOW_TRACKING_URI']
+MODEL_NAME = "happiness_prophet"
+experiment_name = "/Shared/dbx/projects/" + MODEL_NAME
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
-mlflow.set_experiment(MODEL_NAME + "_experiments")
+p = ArgumentParser()
+p.add_argument("--mlflow_tracking_uri", required=False, type=str, default=mlflow_tracking_uri)
+p.add_argument("--experiment", required=False, type=str, default=experiment_name)
+namespace = p.parse_known_args(sys.argv[1:])[0]
+
+mlflow.set_tracking_uri(namespace.mlflow_tracking_uri)
+
+experiment = mlflow.get_experiment_by_name(experiment_name)
+if (experiment is None):
+    experiment_id = mlflow.create_experiment(namespace.experiment)
+    experiment = mlflow.get_experiment(experiment_id)
 
 SLOPE = Faker().random_int(0, 42)
 INTERCEPT = Faker().random_int(0, 42)
@@ -29,21 +43,17 @@ y = np.array(y_values)
 
 client = MlflowClient()
 mlflow.sklearn.autolog()
-with mlflow.start_run() as run:
+with mlflow.start_run(experiment_id=experiment.experiment_id) as run:
     run = mlflow.active_run()
     lr = LinearRegression()
     lr.fit(X, y)
     print(run.info)
     result = mlflow.register_model(
-        "runs:/" + run.info.run_id,
-        MODEL_NAME
-    )
-    client.transition_model_version_stage(
-        name=MODEL_NAME,
-        version=int(result.version),
-        stage="Staging"
-    )
-
-
-
-
+        model_uri="runs:/" + run.info.run_id + "/model",
+        name=MODEL_NAME
+    ) #await_registration_for=300  use for mlflow later version
+#    client.transition_model_version_stage(
+#        name=MODEL_NAME,
+#        version=int(result.version),
+#        stage="Staging"
+#    )

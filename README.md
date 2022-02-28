@@ -68,7 +68,7 @@ mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./
 ### Creating model
 
 ```
-python jazz/train.py
+python jazz/train.py --mlflow_tracking_uri=http://127.0.0.1:5000 --experiment=happiness_experiment
 ```
 
 ### Serving model
@@ -76,7 +76,7 @@ python jazz/train.py
 #### From Python
 
 ```
-python jazz/apply_model.py
+python jazz/apply_model.py --mlflow_tracking_uri=http://127.0.0.1:5000 --model_name=happiness_prophet
 ```
 
 #### From REST API point
