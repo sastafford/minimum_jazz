@@ -9,7 +9,10 @@
                     "driver_node_type_id": "r4.xlarge",
                     "aws_attributes": {
                         "first_on_demand": 0,
-                        "availability": "SPOT"
+                        "availability": "SPOT",
+                        "ebs_volume_type": "GENERAL_PURPOSE_SSD",
+                        "ebs_volume_count": 1,
+                        "ebs_volume_size": 100
                     },
                     "spark_conf": {
                         "spark.master": "local[*]",
@@ -35,7 +38,10 @@
                     "driver_node_type_id": "r4.xlarge",
                     "aws_attributes": {
                         "first_on_demand": 0,
-                        "availability": "SPOT"
+                        "availability": "SPOT",
+                        "ebs_volume_type": "GENERAL_PURPOSE_SSD",
+                        "ebs_volume_count": 1,
+                        "ebs_volume_size": 100
                     },
                     "spark_conf": {
                         "spark.master": "local[*]",
@@ -50,7 +56,7 @@
                 "libraries": [],
                 "max_retries": 0,
                 "spark_python_task": {
-                    "python_file": "jazz/train.py"
+                    "python_file": "jazz/jobs/train.py"
                 }
             }
         ]
