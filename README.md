@@ -91,6 +91,25 @@ mlflow models serve -m runs:/<run_id>/model --no-conda --port 5001
 Execute endpoint
 
 ```
+MLFLOW_TRACKING_URI=http://127.0.0.1:5000
 curl http://127.0.0.1:5001/invocations -H 'Content-Type: application/json' -d '{ "data": [[-10], [-9]] }'
+```
+
+#### Build docker image
+
+Requires docker installed on your local machine
+
+Build the docker image
+
+```
+MLFLOW_TRACKING_URI=http://127.0.0.1:5000
+mlflow models build-docker -m "runs:/some-run-uuid/my-model" -n "happy_image"
+```
+
+Run the docker image and invoke the endpoint on the docke
+
+```
+docker run -p 5002:8080 "happy_image"
+curl http://127.0.0.1:5002/invocations -H 'Content-Type: application/json' -d '{ "data": [[-10], [-9]] }'
 ```
 
