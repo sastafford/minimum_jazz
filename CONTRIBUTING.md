@@ -6,6 +6,8 @@
 
 * Python 3.9
 * [pipenv](https://pipenv.pypa.io/en/latest/) to help facilitate local development
+* mlflow 1.10.0
+* Databricks Runtime 7.3 ML
 
 ### Continuous Integration Toolset
 
