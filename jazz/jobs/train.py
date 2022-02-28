@@ -19,8 +19,8 @@ p.add_argument("--experiment", required=False, type=str, default=experiment_name
 namespace = p.parse_known_args(sys.argv[1:])[0]
 
 mlflow.set_tracking_uri(namespace.mlflow_tracking_uri)
+experiment = mlflow.get_experiment_by_name(namespace.experiment)
 
-experiment = mlflow.get_experiment_by_name(experiment_name)
 if (experiment is None):
     experiment_id = mlflow.create_experiment(namespace.experiment)
     experiment = mlflow.get_experiment(experiment_id)

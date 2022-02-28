@@ -45,10 +45,22 @@ pipenv install --dev -e .
 pytest
 ```
 
-## Run tests in Databrickss
+## Run tests in Databricks using All-Purpose Cluster
 
 ```
 dbx execute --cluster-name=<all_purpose_cluster_name> --job=minimum_jazz_test
+```
+
+## Deploy Jobs
+
+```
+dbx deploy --jobs train_model
+```
+
+## Launch job
+
+```
+dbx launch --job train_model
 ```
 
 ## Build Python whl
